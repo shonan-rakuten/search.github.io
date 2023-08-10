@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>楽天商品おすすめ</title>
+</head>
+<body>
+    <h1>楽天商品おすすめ</h1>
+    <div id="recommendations"></div>
+
+    <script>
+        const API_KEY = 'あなたの楽天APIキー';
+        const BASE_URL = 'https://api.rakuten.co.jp/services/api/IchibaItem/Search/20170706';
+
+        // 商品おすすめ情報を取得する関数
+        async function fetchRecommendations() {
+            const keyword = 'おすすめ'; // 必要に応じてキーワードを変更
+            const response = await fetch(`${BASE_URL}?applicationId=${API_KEY}&keyword=${keyword}`);
+            const data = await response.json();
+            return data.Items;
+        }
+
+        // 商品おすすめ情報をページ上に表示する関数
+        async function renderRecommendations() {
+            const recommendationsDiv = document.getElementById('recommendations');
+            recommendationsDiv.innerHTML = '<p>おすすめ商品を読み込んでいます...</p>';
+            
+            try {
+                const recommendations = await fetchRecommendations();
+                recommendationsDiv.innerHTML = ''; // 読み込み中メッセージをクリア
+                
+                recommendations.forEach(item => {
+                    const productDiv = document.createElement('div');
+                    productDiv.innerHTML = `
+                        <h3>${item.ItemName}</h3>
+                        <p>${item.ItemPrice}円</p>
+                        <img src="${item.ItemImage[0].Medium}" alt="${item.ItemName}">
+                    `;
+                    recommendationsDiv.appendChild(productDiv);
+                });
+            } catch (error) {
+                recommendationsDiv.innerHTML = '<p>おすすめ商品を取得中にエラーが発生しました。</p>';
+                console.error(error);
+            }
+        }
+
+        // ページ読み込み時におすすめ情報を表示する関数を呼び出す
+        window.onload = renderRecommendations;
+    </script>
+</body>
+</html>
