@@ -1,0 +1,61 @@
+<body>
+    <div>
+        <button type="button" class="get-information">楽天API発動！</button>
+    </div>
+
+    <div class="display-information-wrapper">
+        <ul></ul>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(function(){
+        let getInformationButton = $('button.get-information');                                       // 楽天API実行ボタン
+        let appId = '1000646968939020152';                                                                          // さっき作成したアプリID
+        let reqUrl = 'https://app.rakuten.co.jp/services/api/IchibaItem/Search/20170706';             // 楽天市場系APIのリクエストURL
+        let displayInformationWrapper = $('.display-information-wrapper');                            // 商品情報表示エリア
+
+        // ボタンをクリックしたらAPIから情報を取得
+        getInformationButton.click(()=>{
+            $.ajax({
+                url: reqUrl,
+                type: 'GET',
+                data: {
+                    'applicationId': appId,           // アプリID
+                    'formatVersion': 2,               // データのフォーマットバージョン（2の方が合理化されてる状態）
+                    'hits': 5,                        // 1ページあたりの取得件数
+                    'genreId': ,
+                }
+            })
+            .done((data)=>{
+                let items = data.Items;                // 取得した商品情報群
+                let itemListHtml = '';                 // 取得した情報からHTMLを構成するための変数
+
+                console.log(data);
+
+                // 取得した商品情報群をループ
+                for(let i in items) {
+                    let item = items[i];               // 商品情報
+
+                    itemListHtml += `<li class="item">
+                                        <figure class="item-image">
+                                            <img src="${item['mediumImageUrls'][0]}" />
+                                        </figure>
+                                        <div class="item-name">${item['itemName']}</div>
+                                        <div class="item-price">￥${item['itemPrice']}</div>
+                                    </li>`;
+                }
+
+                // itemListHtmlをブラウザ上に表示する
+                displayInformationWrapper.find('ul').append(itemListHtml);
+                
+            })
+            .fail(()=>{
+                console.log('err');
+            })
+            
+        });
+        
+    });
+</script>
