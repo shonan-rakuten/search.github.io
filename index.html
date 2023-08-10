@@ -10,9 +10,12 @@
     <div id="recommendations"></div>
 
     <script>
-        const API_KEY = 'あなたの楽天APIキー';
+        const API_KEY = '1000646968939020152';
         const BASE_URL = 'https://api.rakuten.co.jp/services/api/IchibaItem/Search/20170706';
 
+// アプリID/デベロッパーID(applicationId / developerId)1000646968939020152
+// application_secret:f36b9600c507e724bcb3b962040b92a7500d635e
+// アフィリエイトID(affiliateId)3480c950.1e609578.3480c951.5bf525e6
         // 商品おすすめ情報を取得する関数
         async function fetchRecommendations() {
             const keyword = 'おすすめ'; // 必要に応じてキーワードを変更
