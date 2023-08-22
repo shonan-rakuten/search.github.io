@@ -1,64 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rakuten API Example</title>
+</head>
 <body>
     <div>
+        <label for="tag-id">Tag ID: </label>
+        <input type="text" id="tag-id" />
         <button type="button" class="get-information">楽天API発動！</button>
     </div>
 
     <div class="display-information-wrapper">
         <ul></ul>
     </div>
-</body>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-// アプリID/デベロッパーID(applicationId / developerId)1000646968939020152
-// application_secret:f36b9600c507e724bcb3b962040b92a7500d635e
-// アフィリエイトID(affiliateId)3480c950.1e609578.3480c951.5bf525e6
-    $(function(){
-        let getInformationButton = $('button.get-information');                                       // 楽天API実行ボタン
-        let appId = '1000646968939020152';                                                                          // さっき作成したアプリID
-        let reqUrl = 'https://app.rakuten.co.jp/services/api/IchibaItem/Search/20170706';             // 楽天市場系APIのリクエストURL
-        let displayInformationWrapper = $('.display-information-wrapper');                            // 商品情報表示エリア
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function(){
+            let getInformationButton = $('button.get-information');
+            let appId = '1000646968939020152';
+            let reqUrl = 'https://app.rakuten.co.jp/services/api/IchibaItem/Search/20170706';
+            let displayInformationWrapper = $('.display-information-wrapper');
 
-        // ボタンをクリックしたらAPIから情報を取得
-        getInformationButton.click(()=>{
-            $.ajax({
-                url: reqUrl,
-                type: 'GET',
-                data: {
-                    'applicationId': appId,           // アプリID
-                    'formatVersion': 2,               // データのフォーマットバージョン（2の方が合理化されてる状態）
-                    'hits': 5,                        // 1ページあたりの取得件数
-                    'genreId': 565171,
-                }
-            })
-            .done((data)=>{
-                let items = data.Items;                // 取得した商品情報群
-                let itemListHtml = '';                 // 取得した情報からHTMLを構成するための変数
+            getInformationButton.click(()=>{
+                let tagId = $('#tag-id').val(); // 入力されたtagidを取得
 
-                console.log(data);
+                $.ajax({
+                    url: reqUrl,
+                    type: 'GET',
+                    data: {
+                        'applicationId': appId,
+                        'formatVersion': 2,
+                        'hits': 5,
+                        'genreId': 565171,
+                        'tagId': tagId // tagidをAPIリクエストに追加
+                    }
+                })
+                .done((data)=>{
+                    let items = data.Items;
+                    let itemListHtml = '';
 
-                // 取得した商品情報群をループ
-                for(let i in items) {
-                    let item = items[i];               // 商品情報
+                    // 商品情報をループで処理
+                    for(let i in items) {
+                        let item = items[i];
 
-                    itemListHtml += `<li class="item">
-                                        <figure class="item-image">
-                                            <img src="${item['mediumImageUrls'][0]}" />
-                                        </figure>
-                                        <div class="item-name">${item['itemName']}</div>
-                                        <div class="item-price">￥${item['itemPrice']}</div>
-                                    </li>`;
-                }
+                        itemListHtml += `<li class="item">
+                                            <figure class="item-image">
+                                                <img src="${item['mediumImageUrls'][0]}" />
+                                            </figure>
+                                            <div class="item-name">${item['itemName']}</div>
+                                            <div class="item-price">￥${item['itemPrice']}</div>
+                                        </li>`;
+                    }
 
-                // itemListHtmlをブラウザ上に表示する
-                displayInformationWrapper.find('ul').append(itemListHtml);
-                
-            })
-            .fail(()=>{
-                console.log('err');
-            })
-            
+                    displayInformationWrapper.find('ul').empty().append(itemListHtml); // 表示エリアをクリアしてから結果を表示
+
+                })
+                .fail(()=>{
+                    console.log('err');
+                })
+            });
         });
-        
-    });
-</script>
+    </script>
+</body>
+</html>
