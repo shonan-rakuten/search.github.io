@@ -1,62 +1,147 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rakuten API Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
 <body>
     <div>
+        <label><input type="radio" name="color" value="white" checked>ホワイト</label>
+        <label><input type="radio" name="color" value="black">ブラック</label>
+        <label><input type="radio" name="color" value="gray">グレー</label>
+        <label><input type="radio" name="color" value="brown">ブラウン</label>
+        <label><input type="radio" name="color" value="beige">ベージュ</label>
+        <label><input type="radio" name="color" value="khaki">カーキグリーン</label>
+        <label><input type="radio" name="color" value="pink">ピンク</label>
+        <label><input type="radio" name="color" value="red">レッド</label>
+        <label><input type="radio" name="color" value="orange">オレンジ</label>
+        <label><input type="radio" name="color" value="yellow">イエロー</label>
+        <label><input type="radio" name="color" value="green">グリーン</label>
+        <label><input type="radio" name="color" value="blue">ブルー</label>
+        <label><input type="radio" name="color" value="navy">ネイビー</label>
+        <label><input type="radio" name="color" value="purple">パープル</label>
+        <label><input type="radio" name="color" value="gold">ゴールド</label>
+        <label><input type="radio" name="color" value="silver">シルバー</label>
+        <label><input type="radio" name="color" value="transparent">透明</label>
+        <label><input type="radio" name="color" value="multicolor">マルチカラー</label>
+        <!-- 楽天API発動ボタン -->
         <button type="button" class="get-information">楽天API発動！</button>
     </div>
 
     <div class="display-information-wrapper">
         <ul></ul>
     </div>
-</body>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(function(){
-        let getInformationButton = $('button.get-information');                                       // 楽天API実行ボタン
-        let appId = '1000646968939020152';                                                                          // さっき作成したアプリID
-        let reqUrl = 'https://app.rakuten.co.jp/services/api/IchibaItem/Search/20170706';             // 楽天市場系APIのリクエストURL
-        let displayInformationWrapper = $('.display-information-wrapper');                            // 商品情報表示エリア
+    <script>
+        $(function(){
+            let getInformationButton = $('button.get-information');
+            let appId = '1000646968939020152';
+            let reqUrl = 'https://app.rakuten.co.jp/services/api/IchibaItem/Search/20170706';
+            let displayInformationWrapper = $('.display-information-wrapper');
 
-        // ボタンをクリックしたらAPIから情報を取得
-        getInformationButton.click(()=>{
-            $.ajax({
-                url: reqUrl,
-                type: 'GET',
-                data: {
-                    'applicationId': appId,           // アプリID
-                    'formatVersion': 2,               // データのフォーマットバージョン（2の方が合理化されてる状態）
-                    'hits': 5,                        // 1ページあたりの取得件数
-                    'genreId': 565171,
+            getInformationButton.click(() => {
+                let color = $('input[name="color"]:checked').val(); // 選択された色
+                let tagId;
+
+                // 色に応じてtagIdを設定
+                switch (color) {
+                    case 'white':
+                        tagId = '1000873';
+                        break;
+                    case 'black':
+                        tagId = '1000886';
+                        break;
+                    case 'gray':
+                        tagId = '1000881';
+                        break;
+                    case 'brown':
+                        tagId = '1000883';
+                        break;
+                    case 'beige':
+                        tagId = '1000878';
+                        break;
+                    case 'khaki':
+                        tagId = '1004016';
+                        break;
+                    case 'pink':
+                        tagId = '1000876';
+                        break;
+                    case 'red':
+                        tagId = '1000877';
+                        break;
+                    case 'orange':
+                        tagId = '1000875';
+                        break;
+                    case 'yellow':
+                        tagId = '1000874';
+                        break;
+                    case 'green':
+                        tagId = '1000884';
+                        break;
+                    case 'blue':
+                        tagId = '1000885';
+                        break;
+                    case 'navy':
+                        tagId = '1004015';
+                        break;
+                    case 'purple':
+                        tagId = '1000882';
+                        break;
+                    case 'gold':
+                        tagId = '1000880';
+                        break;
+                    case 'silver':
+                        tagId = '1000879';
+                        break;
+                    case 'transparent':
+                        tagId = '1016062';
+                        break;
+                    case 'multicolor':
+                        tagId = '1000887';
+                        break;
+                    default:
+                        tagId = '1000886'; // デフォルトは黒
                 }
-            })
-            .done((data)=>{
-                let items = data.Items;                // 取得した商品情報群
-                let itemListHtml = '';                 // 取得した情報からHTMLを構成するための変数
 
-                console.log(data);
+                $.ajax({
+                    url: reqUrl,
+                    type: 'GET',
+                    data: {
+                        'applicationId': appId,
+                        'formatVersion': 2,
+                        'hits': 5,
+                        'genreId': 565171,
+                        'tagId': tagId // 色に応じたtagidを送信
+                    }
+                })
+                .done((data) => {
+                    let items = data.Items;
+                    let itemListHtml = '';
 
-                // 取得した商品情報群をループ
-                for(let i in items) {
-                    let item = items[i];               // 商品情報
+                    console.log(data);
 
-                    itemListHtml += `<li class="item">
-                                        <figure class="item-image">
-                                            <img src="${item['mediumImageUrls'][0]}" />
-                                        </figure>
-                                        <div class="item-name">${item['itemName']}</div>
-                                        <div class="item-price">￥${item['itemPrice']}</div>
-                                    </li>`;
-                }
+                    for (let i in items) {
+                        let item = items[i];
 
-                // itemListHtmlをブラウザ上に表示する
-                displayInformationWrapper.find('ul').append(itemListHtml);
-                
-            })
-            .fail(()=>{
-                console.log('err');
-            })
-            
+                        itemListHtml += `<li class="item">
+                                            <figure class="item-image">
+                                                <img src="${item['mediumImageUrls'][0]}" />
+                                            </figure>
+                                            <div class="item-name">${item['itemName']}</div>
+                                            <div class="item-price">￥${item['itemPrice']}</div>
+                                        </li>`;
+                    }
+
+                    displayInformationWrapper.find('ul').empty().append(itemListHtml);
+                })
+                .fail(() => {
+                    console.log('err');
+                })
+            });
         });
-        
-    });
-</script>
+    </script>
+</body>
+</html>
+
