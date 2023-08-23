@@ -8,24 +8,27 @@
 </head>
 <body>
     <div>
-        <label><input type="radio" name="color" value="white" checked>ホワイト</label>
-        <label><input type="radio" name="color" value="black">ブラック</label>
-        <label><input type="radio" name="color" value="gray">グレー</label>
-        <label><input type="radio" name="color" value="brown">ブラウン</label>
-        <label><input type="radio" name="color" value="beige">ベージュ</label>
-        <label><input type="radio" name="color" value="khaki">カーキグリーン</label>
-        <label><input type="radio" name="color" value="pink">ピンク</label>
-        <label><input type="radio" name="color" value="red">レッド</label>
-        <label><input type="radio" name="color" value="orange">オレンジ</label>
-        <label><input type="radio" name="color" value="yellow">イエロー</label>
-        <label><input type="radio" name="color" value="green">グリーン</label>
-        <label><input type="radio" name="color" value="blue">ブルー</label>
-        <label><input type="radio" name="color" value="navy">ネイビー</label>
-        <label><input type="radio" name="color" value="purple">パープル</label>
-        <label><input type="radio" name="color" value="gold">ゴールド</label>
-        <label><input type="radio" name="color" value="silver">シルバー</label>
-        <label><input type="radio" name="color" value="transparent">透明</label>
-        <label><input type="radio" name="color" value="multicolor">マルチカラー</label>
+        <label for="color-select">色：</label>
+        <select id="color-select">
+            <option value="white">ホワイト</option>
+            <option value="black">ブラック</option>
+            <option value="gray">グレー</option>
+            <option value="brown">ブラウン</option>
+            <option value="beige">ベージュ</option>
+            <option value="khaki">カーキグリーン</option>
+            <option value="pink">ピンク</option>
+            <option value="red">レッド</option>
+            <option value="orange">オレンジ</option>
+            <option value="yellow">イエロー</option>
+            <option value="green">グリーン</option>
+            <option value="blue">ブルー</option>
+            <option value="navy">ネイビー</option>
+            <option value="purple">パープル</option>
+            <option value="gold">ゴールド</option>
+            <option value="silver">シルバー</option>
+            <option value="transparent">透明</option>
+            <option value="multicolor">マルチカラー</option>
+        </select>
         <!-- 楽天API発動ボタン -->
         <button type="button" class="get-information">楽天API発動！</button>
     </div>
@@ -42,7 +45,7 @@
             let displayInformationWrapper = $('.display-information-wrapper');
 
             getInformationButton.click(() => {
-                let color = $('input[name="color"]:checked').val(); // 選択された色
+                let color = $('#color-select').val(); // 選択された色
                 let tagId;
 
                 // 色に応じてtagIdを設定
@@ -144,4 +147,3 @@
     </script>
 </body>
 </html>
-
