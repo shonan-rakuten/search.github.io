@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rakuten API Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div>
+        <label for="color-select">色：</label>
+        <select id="color-select">
+            <option value="white">ホワイト</option>
+            <option value="black">ブラック</option>
+            <!-- 他の色の選択肢も追加 -->
+        </select>
+        
+        <label for="manufacturer-select">メーカー：</label>
+        <select id="manufacturer-select">
+            <option value="logicool">ロジクール</option>
+            <option value="elecom">エレコム</option>
+            <!-- 他のメーカーの選択肢も追加 -->
+        </select>
+        
+        <!-- 楽天API発動ボタン -->
+        <button type="button" class="get-information">楽天API発動！</button>
+    </div>
+
+    <div class="display-information-wrapper">
+        <ul></ul>
+    </div>
+
+    <script>
+        $(function(){
+            let getInformationButton = $('button.get-information');
+            let appId = '1000646968939020152';
+            let reqUrl = 'https://app.rakuten.co.jp/services/api/IchibaItem/Search/20170706';
+            let displayInformationWrapper = $('.display-information-wrapper');
+
+            getInformationButton.click(() => {
+                let color = $('#color-select').val(); // 選択された色
+                let manufacturer = $('#manufacturer-select').val(); // 選択されたメーカー
+                let tagIds = [];
+
+                // 色に応じたtagIdを設定
+                switch (color) {
+                    case 'white':
+                        tagIds.push('1000873');
+                        break;
+                    case 'black':
+                        tagIds.push('1000886');
+                        break;
+                    // 他の色に対するtagIdも追加
+                }
+
+                // メーカーに応じたtagIdを設定
+                switch (manufacturer) {
+                    case 'logicool':
+                        tagIds.push('1002877');
+                        break;
+                    case 'elecom':
+                        tagIds.push('1002854');
+                        break;
+                    // 他のメーカーに対するtagIdも追加
+                }
+
+                $.ajax({
+                    url: reqUrl,
+                    type: 'GET',
+                    data: {
+                        'applicationId': appId,
+                        'formatVersion': 2,
+                        'hits': 5,
+                        'genreId': 565171,
+                        'tagId': tagIds.join(',') // 複数のtagIdをカンマ区切りで送信
+                    }
+                })
+                .done((data) => {
+                    let items = data.Items;
+                    let itemListHtml = '';
+
+                    console.log(data);
+
+                    for (let i in items) {
+                        let item = items[i];
+
+                        itemListHtml += `<li class="item">
+    <figure class="item-image">
+        <img src="${item['mediumImageUrls'][0]['imageUrl']}" />
+    </figure>
+    <div class="item-name">${item['itemName']}</div>
+    <div class="item-price">￥${item['itemPrice']}</div>
+</li>`;
+
+                    }
+
+                    displayInformationWrapper.find('ul').empty().append(itemListHtml);
+                })
+                .fail((xhr, status, error) => {
+                    console.log('Error:', error);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
