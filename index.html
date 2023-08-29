@@ -5,6 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rakuten API Example</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .item-image img {
+            max-width: 100px;
+            max-height: 100px;
+            margin-right: 10px;
+        }
+
+        .display-information-wrapper {
+            margin-top: 20px;
+        }
+
+        select, button {
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+    </style>
 </head>
 <body>
     <div>
@@ -28,7 +69,34 @@
             <option value="silver">シルバー</option>
             <option value="transparent">透明</option>
             <option value="multicolor">マルチカラー</option>
+            <!-- 他の色の選択肢も追加 -->
         </select>
+        
+        <label for="manufacturer-select">メーカー：</label>
+        <select id="manufacturer-select">
+            <option value="logicool">ロジクール</option>
+            <option value="elecom">エレコム</option>
+            <option value="logicool">ロジテック</option>
+            <option value="asus">ASUS</option>
+            <option value="sanwa-supply">サンワサプライ</option>
+            <option value="corsair">CORSAIR</option>
+            <option value="omron">オムロン</option>
+            <option value="razer">レイザー</option>
+            <option value="cooler-master">クーラーマスター</option>
+            <option value="msi">MSI</option>
+            <option value="lenovo">Lenovo</option>
+            <option value="benq">ベンキュー</option>
+            <option value="century">センチュリー</option>
+            <option value="microsoft">マイクロソフト</option>
+            <option value="nzxt">NZXT</option>
+            <option value="hp">HP</option>
+            <option value="size">サイズ</option>
+            <option value="buffalo">バッファロー</option>
+            <option value="intel">Intel</option>
+            <option value="azone">アズワン</option>
+            <!-- 他のメーカーの選択肢も追加 -->
+        </select>
+        
         <!-- 楽天API発動ボタン -->
         <button type="button" class="get-information">楽天API発動！</button>
     </div>
@@ -46,66 +114,135 @@
 
             getInformationButton.click(() => {
                 let color = $('#color-select').val(); // 選択された色
-                let tagId;
+                let manufacturer = $('#manufacturer-select').val(); // 選択されたメーカー
+                let tagIds = [];
 
-                // 色に応じてtagIdを設定
+                // 色に応じたtagIdを設定
                 switch (color) {
                     case 'white':
-                        tagId = '1000873';
+                        tagIds.push('1000873');
                         break;
                     case 'black':
-                        tagId = '1000886';
+                        tagIds.push('1000886');
                         break;
                     case 'gray':
-                        tagId = '1000881';
+                        tagIds.push('1000881');
                         break;
                     case 'brown':
-                        tagId = '1000883';
+                        tagIds.push('1000883');
                         break;
                     case 'beige':
-                        tagId = '1000878';
+                        tagIds.push('1000878');
                         break;
                     case 'khaki':
-                        tagId = '1004016';
+                        tagIds.push('1004016');
                         break;
                     case 'pink':
-                        tagId = '1000876';
+                        tagIds.push('1000876');
                         break;
                     case 'red':
-                        tagId = '1000877';
+                        tagIds.push('1000877');
                         break;
                     case 'orange':
-                        tagId = '1000875';
+                        tagIds.push('1000875');
                         break;
                     case 'yellow':
-                        tagId = '1000874';
+                        tagIds.push('1000874');
                         break;
                     case 'green':
-                        tagId = '1000884';
+                        tagIds.push('1000884');
                         break;
                     case 'blue':
-                        tagId = '1000885';
+                        tagIds.push('1000885');
                         break;
                     case 'navy':
-                        tagId = '1004015';
+                        tagIds.push('1004015');
                         break;
                     case 'purple':
-                        tagId = '1000882';
+                        tagIds.push('1000882');
                         break;
                     case 'gold':
-                        tagId = '1000880';
+                        tagIds.push('1000880');
                         break;
                     case 'silver':
-                        tagId = '1000879';
+                        tagIds.push('1000879');
                         break;
                     case 'transparent':
-                        tagId = '1016062';
+                        tagIds.push('1016062');
                         break;
                     case 'multicolor':
-                        tagId = '1000887';
+                        tagIds.push('1000887');
                         break;
                     default:
-                        tagId = '1000886'; // デフォルトは黒
+                        tagIds.push('1000886'); 
+                    // 他の色に対するtagIdも追加
+                }
+
+                // メーカーに応じたtagIdを設定
+                switch (manufacturer) {
+                    case 'logicool':
+                        tagIds.push('1002877');
+                        break;
+                    case 'elecom':
+                        tagIds.push('1002854');
+                        break;
+                    case 'logitech':
+                        tagIds.push('1002878');
+                        break;
+                    case 'asus':
+                        tagIds.push('1002853');
+                        break;
+                    case 'sanwa-supply':
+                        tagIds.push('1002859');
+                        break;
+                    case 'corsair':
+                        tagIds.push('1044767');
+                        break;
+                    case 'omron':
+                        tagIds.push('1004297');
+                        break;
+                    case 'razer':
+                        tagIds.push('1026502');
+                        break;
+                    case 'cooler-master':
+                        tagIds.push('1005456');
+                        break;
+                    case 'msi':
+                        tagIds.push('1004767');
+                        break;
+                    case 'lenovo':
+                        tagIds.push('1002875');
+                        break;
+                    case 'benq':
+                        tagIds.push('1004709');
+                        break;
+                    case 'century':
+                        tagIds.push('1018642');
+                        break;
+                    case 'microsoft':
+                        tagIds.push('1002872');
+                        break;
+                    case 'nzxt':
+                        tagIds.push('1044769');
+                        break;
+                    case 'hp':
+                        tagIds.push('1004771');
+                        break;
+                    case 'size':
+                        tagIds.push('1005458');
+                        break;
+                    case 'buffalo':
+                        tagIds.push('1002866');
+                        break;
+                    case 'intel':
+                        tagIds.push('1004775');
+                        break;
+                    case 'azone':
+                        tagIds.push('1016097');
+                        break;
+                    default:
+                        tagIds.push('1000886');
+                        break;
                 }
 
                 $.ajax({
@@ -116,7 +253,7 @@
                         'formatVersion': 2,
                         'hits': 5,
                         'genreId': 565171,
-                        'tagId': tagId // 色に応じたtagidを送信
+                        'tagId': tagIds.join(',') // 複数のtagIdをカンマ区切りで送信
                     }
                 })
                 .done((data) => {
@@ -129,19 +266,20 @@
                         let item = items[i];
 
                         itemListHtml += `<li class="item">
-                                            <figure class="item-image">
-                                                <img src="${item['mediumImageUrls'][0]}" />
-                                            </figure>
-                                            <div class="item-name">${item['itemName']}</div>
-                                            <div class="item-price">￥${item['itemPrice']}</div>
-                                        </li>`;
+    <figure class="item-image">
+        <img src="${item['mediumImageUrls'][0]}" />
+    </figure>
+    <div class="item-name">${item['itemName']}</div>
+    <div class="item-price">￥${item['itemPrice']}</div>
+</li>`;
+
                     }
 
                     displayInformationWrapper.find('ul').empty().append(itemListHtml);
                 })
-                .fail(() => {
-                    console.log('err');
-                })
+                .fail((xhr, status, error) => {
+                    console.log('Error:', error);
+                });
             });
         });
     </script>
