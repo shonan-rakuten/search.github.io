@@ -51,29 +51,29 @@
     <div>
         <label for="color-select">色：</label>
         <select id="color-select">
+            <option value="">選択なし</option>
             <option value="white">ホワイト</option>
             <option value="black">ブラック</option>
             <option value="gray">グレー</option>
             <option value="brown">ブラウン</option>
             <option value="beige">ベージュ</option>
-            <option value="khaki">カーキグリーン</option>
             <option value="pink">ピンク</option>
             <option value="red">レッド</option>
             <option value="orange">オレンジ</option>
             <option value="yellow">イエロー</option>
             <option value="green">グリーン</option>
             <option value="blue">ブルー</option>
-            <option value="navy">ネイビー</option>
             <option value="purple">パープル</option>
             <option value="gold">ゴールド</option>
             <option value="silver">シルバー</option>
             <option value="transparent">透明</option>
             <option value="multicolor">マルチカラー</option>
-            <!-- 他の色の選択肢も追加 -->
+            
         </select>
         
         <label for="manufacturer-select">メーカー：</label>
         <select id="manufacturer-select">
+            <option value="">選択なし</option>
             <option value="logicool">ロジクール</option>
             <option value="elecom">エレコム</option>
             <option value="logicool">ロジテック</option>
@@ -93,12 +93,21 @@
             <option value="size">サイズ</option>
             <option value="buffalo">バッファロー</option>
             <option value="intel">Intel</option>
-            <option value="azone">アズワン</option>
-            <!-- 他のメーカーの選択肢も追加 -->
+           
         </select>
-        
-        <!-- 楽天API発動ボタン -->
-        <button type="button" class="get-information">楽天API発動！</button>
+
+        <label for="connection-select">接続方式：</label>
+        <select id="connection-select">
+            <option value="">選択なし</option>
+            <option value="wireless-2.4ghz">無線2.4Ghz</option>
+            <option value="wireless-bluetooth">無線Bluetooth</option>
+            <option value="wired-ps2">有線PS/2</option>
+            <option value="wired-usb-typea">有線USB-typeA</option>
+            <option value="wired-usb-typec">有線USB-typeC</option>
+        </select>
+                
+        <!-- 楽天APIボタン -->
+        <button type="button" class="get-information">楽天API</button>
     </div>
 
     <div class="display-information-wrapper">
@@ -115,9 +124,13 @@
             getInformationButton.click(() => {
                 let color = $('#color-select').val(); // 選択された色
                 let manufacturer = $('#manufacturer-select').val(); // 選択されたメーカー
+                let connectionType = $('#connection-select').val(); // 選択された接続方式
                 let tagIds = [];
+                
+                
 
                 // 色に応じたtagIdを設定
+            if (color !== '' && color !== '選択なし') {
                 switch (color) {
                     case 'white':
                         tagIds.push('1000873');
@@ -133,9 +146,6 @@
                         break;
                     case 'beige':
                         tagIds.push('1000878');
-                        break;
-                    case 'khaki':
-                        tagIds.push('1004016');
                         break;
                     case 'pink':
                         tagIds.push('1000876');
@@ -155,9 +165,6 @@
                     case 'blue':
                         tagIds.push('1000885');
                         break;
-                    case 'navy':
-                        tagIds.push('1004015');
-                        break;
                     case 'purple':
                         tagIds.push('1000882');
                         break;
@@ -175,10 +182,11 @@
                         break;
                     default:
                         tagIds.push('1000886'); 
-                    // 他の色に対するtagIdも追加
+                   
                 }
-
+            }
                 // メーカーに応じたtagIdを設定
+                if (manufacturer !== '' && manufacturer !== '選択なし') {
                 switch (manufacturer) {
                     case 'logicool':
                         tagIds.push('1002877');
@@ -237,25 +245,44 @@
                     case 'intel':
                         tagIds.push('1004775');
                         break;
-                    case 'azone':
-                        tagIds.push('1016097');
-                        break;
                     default:
                         tagIds.push('1000886');
                         break;
                 }
-
+            }
+            if (connectionType !== '' && connectionType !== '選択なし') {
+                switch (connectionType) {
+                    case 'wireless-2.4ghz':
+                    tagIds.push('1043162');
+                        break;
+                    case 'wireless-bluetooth':
+                    tagIds.push('1005370');
+                        break;
+                    case 'wired-ps2':
+                    tagIds.push('1013520');
+                        break;
+                    case 'wired-usb-typea':
+                    tagIds.push('1005369');
+                        break;
+                    case 'wired-usb-typec':
+                    tagIds.push('1043161');
+                        break;
+                    default:
+                    tagIds.push('1043162');
+                        break;
+        }
+    }
                 $.ajax({
-                    url: reqUrl,
-                    type: 'GET',
-                    data: {
-                        'applicationId': appId,
-                        'formatVersion': 2,
-                        'hits': 5,
-                        'genreId': 565171,
-                        'tagId': tagIds.join(',') // 複数のtagIdをカンマ区切りで送信
-                    }
-                })
+                url: reqUrl,
+                type: 'GET',
+                data: {
+                    'applicationId': appId,
+                    'formatVersion': 2,
+                    'hits': 5,
+                    'genreId': 565171,
+                    'tagId': tagIds.length > 0 ? tagIds.join(',') : undefined // カンマ区切りのtagIdを送信 (存在しない場合は未定義)
+                }
+            })
                 .done((data) => {
                     let items = data.Items;
                     let itemListHtml = '';
