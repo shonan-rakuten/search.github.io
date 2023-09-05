@@ -105,6 +105,18 @@
             <option value="wired-usb-typea">有線USB-typeA</option>
             <option value="wired-usb-typec">有線USB-typeC</option>
         </select>
+
+        <label for="mouse-type-select">マウスタイプ：</label>
+        <select id="mouse-type-select">
+            <option value="">選択なし</option>
+            <option value="optical">光学式マウス</option>
+            <option value="laser">レーザーマウス</option>
+            <option value="blue-led">BlueLEDマウス</option>
+            <option value="trackball">トラックボール</option>
+            <option value="ir-led">IR LEDマウス</option>
+            <option value="touchpad">タッチパッド</option>
+        </select>
+
                 
         <!-- 楽天APIボタン -->
         <button type="button" class="get-information">楽天API</button>
@@ -120,6 +132,8 @@
             let appId = '1000646968939020152';
             let reqUrl = 'https://app.rakuten.co.jp/services/api/IchibaItem/Search/20170706';
             let displayInformationWrapper = $('.display-information-wrapper');
+            let mouseType = $('#mouse-type-select').val(); // 選択されたマウスタイプ
+            let mouseTypeTagIds = [];
 
             getInformationButton.click(() => {
                 let color = $('#color-select').val(); // 選択された色
@@ -272,6 +286,32 @@
                         break;
         }
     }
+
+    if (mouseType !== '' && mouseType !== '選択なし') {
+                    switch (mouseType) {
+                        case 'optical':
+                            mouseTypeTagIds.push('1005366');
+                            break;
+                        case 'laser':
+                            mouseTypeTagIds.push('1005365');
+                            break;
+                        case 'blue-led':
+                            mouseTypeTagIds.push('1005364');
+                            break;
+                        case 'trackball':
+                            mouseTypeTagIds.push('1005367');
+                            break;
+                        case 'ir-led':
+                            mouseTypeTagIds.push('1020225');
+                            break;
+                        case 'touchpad':
+                            mouseTypeTagIds.push('1005368');
+                            break;
+                        default:
+                            mouseTypeTagIds.push('1005366'); // Default to optical
+                    }
+                }
+                
                 $.ajax({
                 url: reqUrl,
                 type: 'GET',
@@ -298,6 +338,7 @@
     </figure>
     <div class="item-name">${item['itemName']}</div>
     <div class="item-price">￥${item['itemPrice']}</div>
+    <a href="${item['itemUrl']}" target="_blank">商品ページへ</a>
 </li>`;
 
                     }
