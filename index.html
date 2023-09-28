@@ -81,7 +81,7 @@
             <option value="sanwa-supply">サンワサプライ</option>
             <option value="corsair">CORSAIR</option>
             <option value="omron">オムロン</option>
-            <option value="razer">レイザー</option>
+            <option value="razer">Razer</option>
             <option value="cooler-master">クーラーマスター</option>
             <option value="msi">MSI</option>
             <option value="lenovo">Lenovo</option>
@@ -117,6 +117,12 @@
             <option value="touchpad">タッチパッド</option>
         </select>
 
+        <label for="min-price-input">最小価格：</label>
+        <input type="number" id="min-price-input" placeholder="最小価格" />
+
+        <label for="max-price-input">最大価格：</label>
+        <input type="number" id="max-price-input" placeholder="最大価格" />
+
                 
         <!-- 楽天APIボタン -->
         <button type="button" class="get-information">楽天API</button>
@@ -139,6 +145,8 @@
                 let color = $('#color-select').val(); // 選択された色
                 let manufacturer = $('#manufacturer-select').val(); // 選択されたメーカー
                 let connectionType = $('#connection-select').val(); // 選択された接続方式
+                let minPrice = $('#min-price-input').val(); // 最小価格
+                let maxPrice = $('#max-price-input').val(); // 最大価格
                 let tagIds = [];
                 
                 
@@ -319,27 +327,35 @@
                     'applicationId': appId,
                     'formatVersion': 2,
                     'hits': 5,
+                    'condition': '0',
                     'genreId': 565171,
-                    'tagId': tagIds.length > 0 ? tagIds.join(',') : undefined // カンマ区切りのtagIdを送信 (存在しない場合は未定義)
+                    'tagId': tagIds.length > 0 ? tagIds.join(',') : undefined, // カンマ区切りのtagIdを送信 (存在しない場合は未定義)
+                    'minPrice': minPrice, 
+                    'maxPrice': maxPrice,
+                    
                 }
             })
                 .done((data) => {
                     let items = data.Items;
+
+                    items.sort((a, b) => b.itemPrice - a.itemPrice);
+
                     let itemListHtml = '';
 
                     console.log(data);
+                    
 
                     for (let i in items) {
                         let item = items[i];
 
                         itemListHtml += `<li class="item">
-    <figure class="item-image">
-        <img src="${item['mediumImageUrls'][0]}" />
-    </figure>
-    <div class="item-name">${item['itemName']}</div>
-    <div class="item-price">￥${item['itemPrice']}</div>
-    <a href="${item['itemUrl']}" target="_blank">商品ページへ</a>
-</li>`;
+                        <figure class="item-image">
+                            <img src="${item['mediumImageUrls'][0]}" />
+                        </figure>
+                        <div class="item-name">${item['itemName']}</div>
+                        <div class="item-price">￥${item['itemPrice']}</div>
+                        <a href="${item['itemUrl']}" target="_blank">商品ページへ</a>
+                    </li>`;
 
                     }
 
