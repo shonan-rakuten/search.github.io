@@ -1,369 +1,338 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rakuten API Example</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rakuten API Example</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+body {
+font-family: Arial, sans-serif;
+}
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-        }
 
-        .item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 5px;
-        }
+.container {
+max-width: 800px;
+margin: 0 auto;
+padding: 20px;
+text-align: center;
+}
 
-        .item-image img {
-            max-width: 100px;
-            max-height: 100px;
-            margin-right: 10px;
-        }
 
-        .display-information-wrapper {
-            margin-top: 20px;
-        }
+.item {
+display: flex;
+align-items: center;
+margin-bottom: 20px;
+border: 1px solid #ddd;
+padding: 10px;
+border-radius: 5px;
+}
 
-        select, button {
-            padding: 5px 10px;
-            font-size: 14px;
-        }
 
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-    </style>
+.item-image img {
+max-width: 100px;
+max-height: 100px;
+margin-right: 10px;
+}
+
+
+.display-information-wrapper {
+margin-top: 20px;
+}
+
+
+select, button {
+padding: 5px 10px;
+font-size: 14px;
+}
+
+
+ul {
+list-style: none;
+padding: 0;
+}
+</style>
 </head>
 <body>
-    <div>
-        <label for="color-select">色：</label>
-        <select id="color-select">
-            <option value="">選択なし</option>
-            <option value="white">ホワイト</option>
-            <option value="black">ブラック</option>
-            <option value="gray">グレー</option>
-            <option value="brown">ブラウン</option>
-            <option value="beige">ベージュ</option>
-            <option value="pink">ピンク</option>
-            <option value="red">レッド</option>
-            <option value="orange">オレンジ</option>
-            <option value="yellow">イエロー</option>
-            <option value="green">グリーン</option>
-            <option value="blue">ブルー</option>
-            <option value="purple">パープル</option>
-            <option value="gold">ゴールド</option>
-            <option value="silver">シルバー</option>
-            <option value="transparent">透明</option>
-            <option value="multicolor">マルチカラー</option>
-            
-        </select>
-        
-        <label for="manufacturer-select">メーカー：</label>
-        <select id="manufacturer-select">
-            <option value="">選択なし</option>
-            <option value="logicool">ロジクール</option>
-            <option value="elecom">エレコム</option>
-            <option value="logicool">ロジテック</option>
-            <option value="asus">ASUS</option>
-            <option value="sanwa-supply">サンワサプライ</option>
-            <option value="corsair">CORSAIR</option>
-            <option value="omron">オムロン</option>
-            <option value="razer">Razer</option>
-            <option value="cooler-master">クーラーマスター</option>
-            <option value="msi">MSI</option>
-            <option value="lenovo">Lenovo</option>
-            <option value="benq">ベンキュー</option>
-            <option value="century">センチュリー</option>
-            <option value="microsoft">マイクロソフト</option>
-            <option value="nzxt">NZXT</option>
-            <option value="hp">HP</option>
-            <option value="size">サイズ</option>
-            <option value="buffalo">バッファロー</option>
-            <option value="intel">Intel</option>
-           
-        </select>
+<div>
+<label for="color-select">色：</label>
+<select id="color-select">
+<option value="">選択なし</option>
+<option value="white">ホワイト</option>
+<option value="black">ブラック</option>
+<option value="gray">グレー</option>
+<option value="pink">ピンク</option>
+<option value="red">レッド</option>
+<option value="orange">オレンジ</option>
+<option value="green">グリーン</option>
+<option value="blue">ブルー</option>
+<option value="purple">パープル</option>
+<option value="gold">ゴールド</option>
+<option value="silver">シルバー</option>
+<option value="transparent">透明</option>
+<option value="multicolor">マルチカラー</option>
+</select>
+<label for="manufacturer-select">メーカー：</label>
+<select id="manufacturer-select">
+<option value="">選択なし</option>
+<option value="logicool">ロジクール</option>
+<option value="elecom">エレコム</option>
+<option value="logicool">ロジテック</option>
+<option value="asus">ASUS</option>
+<option value="sanwa-supply">サンワサプライ</option>
+<option value="corsair">CORSAIR</option>
+<option value="omron">オムロン</option>
+<option value="razer">razer</option>
+<option value="cooler-master">クーラーマスター</option>
+<option value="msi">MSI</option>
+<option value="lenovo">Lenovo</option>
+<option value="benq">ベンキュー</option>
+<option value="century">センチュリー</option>
+<option value="microsoft">マイクロソフト</option>
+<option value="nzxt">NZXT</option>
+<option value="hp">HP</option>
+<option value="buffalo">バッファロー</option>
+</select>
 
-        <label for="connection-select">接続方式：</label>
-        <select id="connection-select">
-            <option value="">選択なし</option>
-            <option value="wireless-2.4ghz">無線2.4Ghz</option>
-            <option value="wireless-bluetooth">無線Bluetooth</option>
-            <option value="wired-ps2">有線PS/2</option>
-            <option value="wired-usb-typea">有線USB-typeA</option>
-            <option value="wired-usb-typec">有線USB-typeC</option>
-        </select>
 
-        <label for="mouse-type-select">マウスタイプ：</label>
-        <select id="mouse-type-select">
-            <option value="">選択なし</option>
-            <option value="optical">光学式マウス</option>
-            <option value="laser">レーザーマウス</option>
-            <option value="blue-led">BlueLEDマウス</option>
-            <option value="trackball">トラックボール</option>
-            <option value="ir-led">IR LEDマウス</option>
-            <option value="touchpad">タッチパッド</option>
-        </select>
+<label for="connection-select">接続方式：</label>
+<select id="connection-select">
+<option value="">選択なし</option>
+<option value="wireless-2.4ghz">無線2.4Ghz</option>
+<option value="wireless-bluetooth">無線Bluetooth</option>
+<option value="wired-ps2">有線PS/2</option>
+<option value="wired-usb-typea">有線USB-typeA</option>
+<option value="wired-usb-typec">有線USB-typeC</option>
+</select>
 
-        <label for="min-price-input">最小価格：</label>
-        <input type="number" id="min-price-input" placeholder="最小価格" />
 
-        <label for="max-price-input">最大価格：</label>
-        <input type="number" id="max-price-input" placeholder="最大価格" />
 
-                
-        <!-- 楽天APIボタン -->
-        <button type="button" class="get-information">楽天API</button>
-    </div>
 
-    <div class="display-information-wrapper">
-        <ul></ul>
-    </div>
+<label for="min-price-input">最小価格：</label>
+<input type="number" id="min-price-input" placeholder="最小価格" />
 
-    <script>
-        $(function(){
-            let displayedItemNames = [];
-            let getInformationButton = $('button.get-information');
-            let appId = '1000646968939020152';
-            let reqUrl = 'https://app.rakuten.co.jp/services/api/IchibaItem/Search/20170706';
-            let displayInformationWrapper = $('.display-information-wrapper');
-            let mouseType = $('#mouse-type-select').val(); // 選択されたマウスタイプ
-            let mouseTypeTagIds = [];
 
-            getInformationButton.click(() => {
-                let color = $('#color-select').val(); // 選択された色
-                let manufacturer = $('#manufacturer-select').val(); // 選択されたメーカー
-                let connectionType = $('#connection-select').val(); // 選択された接続方式
-                let minPrice = $('#min-price-input').val(); // 最小価格
-                let maxPrice = $('#max-price-input').val(); // 最大価格
-                let tagIds = [];
-                
-                
+<label for="max-price-input">最大価格：</label>
+<input type="number" id="max-price-input" placeholder="最大価格" />
 
-                // 色に応じたtagIdを設定
-            if (color !== '' && color !== '選択なし') {
-                switch (color) {
-                    case 'white':
-                        tagIds.push('1000873');
-                        break;
-                    case 'black':
-                        tagIds.push('1000886');
-                        break;
-                    case 'gray':
-                        tagIds.push('1000881');
-                        break;
-                    case 'brown':
-                        tagIds.push('1000883');
-                        break;
-                    case 'beige':
-                        tagIds.push('1000878');
-                        break;
-                    case 'pink':
-                        tagIds.push('1000876');
-                        break;
-                    case 'red':
-                        tagIds.push('1000877');
-                        break;
-                    case 'orange':
-                        tagIds.push('1000875');
-                        break;
-                    case 'yellow':
-                        tagIds.push('1000874');
-                        break;
-                    case 'green':
-                        tagIds.push('1000884');
-                        break;
-                    case 'blue':
-                        tagIds.push('1000885');
-                        break;
-                    case 'purple':
-                        tagIds.push('1000882');
-                        break;
-                    case 'gold':
-                        tagIds.push('1000880');
-                        break;
-                    case 'silver':
-                        tagIds.push('1000879');
-                        break;
-                    case 'transparent':
-                        tagIds.push('1016062');
-                        break;
-                    case 'multicolor':
-                        tagIds.push('1000887');
-                        break;
-                    default:
-                        tagIds.push('1000886'); 
-                   
-                }
-            }
-                // メーカーに応じたtagIdを設定
-                if (manufacturer !== '' && manufacturer !== '選択なし') {
-                switch (manufacturer) {
-                    case 'logicool':
-                        tagIds.push('1002877');
-                        break;
-                    case 'elecom':
-                        tagIds.push('1002854');
-                        break;
-                    case 'logitech':
-                        tagIds.push('1002878');
-                        break;
-                    case 'asus':
-                        tagIds.push('1002853');
-                        break;
-                    case 'sanwa-supply':
-                        tagIds.push('1002859');
-                        break;
-                    case 'corsair':
-                        tagIds.push('1044767');
-                        break;
-                    case 'omron':
-                        tagIds.push('1004297');
-                        break;
-                    case 'razer':
-                        tagIds.push('1026502');
-                        break;
-                    case 'cooler-master':
-                        tagIds.push('1005456');
-                        break;
-                    case 'msi':
-                        tagIds.push('1004767');
-                        break;
-                    case 'lenovo':
-                        tagIds.push('1002875');
-                        break;
-                    case 'benq':
-                        tagIds.push('1004709');
-                        break;
-                    case 'century':
-                        tagIds.push('1018642');
-                        break;
-                    case 'microsoft':
-                        tagIds.push('1002872');
-                        break;
-                    case 'nzxt':
-                        tagIds.push('1044769');
-                        break;
-                    case 'hp':
-                        tagIds.push('1004771');
-                        break;
-                    case 'size':
-                        tagIds.push('1005458');
-                        break;
-                    case 'buffalo':
-                        tagIds.push('1002866');
-                        break;
-                    case 'intel':
-                        tagIds.push('1004775');
-                        break;
-                    default:
-                        tagIds.push('1000886');
-                        break;
-                }
-            }
-            if (connectionType !== '' && connectionType !== '選択なし') {
-                switch (connectionType) {
-                    case 'wireless-2.4ghz':
-                    tagIds.push('1043162');
-                        break;
-                    case 'wireless-bluetooth':
-                    tagIds.push('1005370');
-                        break;
-                    case 'wired-ps2':
-                    tagIds.push('1013520');
-                        break;
-                    case 'wired-usb-typea':
-                    tagIds.push('1005369');
-                        break;
-                    case 'wired-usb-typec':
-                    tagIds.push('1043161');
-                        break;
-                    default:
-                    tagIds.push('1043162');
-                        break;
-        }
-    }
 
-    if (mouseType !== '' && mouseType !== '選択なし') {
-                    switch (mouseType) {
-                        case 'optical':
-                            mouseTypeTagIds.push('1005366');
-                            break;
-                        case 'laser':
-                            mouseTypeTagIds.push('1005365');
-                            break;
-                        case 'blue-led':
-                            mouseTypeTagIds.push('1005364');
-                            break;
-                        case 'trackball':
-                            mouseTypeTagIds.push('1005367');
-                            break;
-                        case 'ir-led':
-                            mouseTypeTagIds.push('1020225');
-                            break;
-                        case 'touchpad':
-                            mouseTypeTagIds.push('1005368');
-                            break;
-                        default:
-                            mouseTypeTagIds.push('1005366'); // Default to optical
-                    }
-                }
-                
-                $.ajax({
-                url: reqUrl,
-                type: 'GET',
-                data: {
-                    'applicationId': appId,
-                    'formatVersion': 2,
-                    'hits': 5,
-                    'keyword': 'ゲーミングマウス',
-                    'condition': '0',
-                    'tagId': tagIds.length > 0 ? tagIds.join(',') : undefined, // カンマ区切りのtagIdを送信 (存在しない場合は未定義)
-                    'minPrice': minPrice, 
-                    'maxPrice': maxPrice,
-                    
-                }
-            })
-                .done((data) => {
-                    let items = data.Items;
-                    items.sort((a, b) => b.reviewCount - a.reviewCount);
-                    let itemListHtml = '';
+<!-- 楽天APIボタン -->
+<button type="button" class="get-information">楽天API</button>
+</div>
 
-                    console.log(data);
-                    
 
-                    for (let i in items) {
-                        let item = items[i];
-                        itemListHtml += `<li class="item">
-                        <figure class="item-image">
-                            <img src="${item['mediumImageUrls'][0]}" />
-                        </figure>
-                        <div class="item-name">${item['itemName']}</div>
-                        <div class="item-price">￥${item['itemPrice']}</div>
-                        <div class="item-review-count">レビュー数: ${item['reviewCount']}</div>
-                        <div class="item-rating-average">評価平均: ${item['reviewAverage']}</div>
-                        <a href="${item['itemUrl']}" target="_blank">商品ページへ</a>
-                    </li>`;
-                    }
+<div class="display-information-wrapper">
+<ul></ul>
+</div>
 
-                    displayInformationWrapper.find('ul').empty().append(itemListHtml);
-                })
-                .fail((xhr, status, error) => {
-                    console.log('Error:', error);
-                });
-            });
-        });
-    </script>
+
+<script>
+$(function(){
+let displayedItemNames = [];
+let getInformationButton = $('button.get-information');
+let appId = '1000646968939020152';
+let reqUrl = 'https://app.rakuten.co.jp/services/api/IchibaItem/Search/20220601';
+let displayInformationWrapper = $('.display-information-wrapper');
+let mouseType = $('#mouse-type-select').val(); // 選択されたマウスタイプ
+let mouseTypeTagIds = [];
+
+
+getInformationButton.click(() => {
+let color = $('#color-select').val(); // 選択された色
+let manufacturer = $('#manufacturer-select').val(); // 選択されたメーカー
+let connectionType = $('#connection-select').val(); // 選択された接続方式
+let minPrice = $('#min-price-input').val(); // 最小価格
+let maxPrice = $('#max-price-input').val(); // 最大価格
+let tagIds = [];
+
+
+// 色に応じたtagIdを設定
+if (color !== '' && color !== '選択なし') {
+switch (color) {
+case 'white':
+tagIds.push('1000873');
+break;
+case 'black':
+tagIds.push('1000886');
+break;
+case 'gray':
+tagIds.push('1000881');
+break;
+case 'brown':
+tagIds.push('1000883');
+break;
+case 'beige':
+tagIds.push('1000878');
+break;
+case 'pink':
+tagIds.push('1000876');
+break;
+case 'red':
+tagIds.push('1000877');
+break;
+case 'orange':
+tagIds.push('1000875');
+break;
+case 'yellow':
+tagIds.push('1000874');
+break;
+case 'green':
+tagIds.push('1000884');
+break;
+case 'blue':
+tagIds.push('1000885');
+break;
+case 'purple':
+tagIds.push('1000882');
+break;
+case 'gold':
+tagIds.push('1000880');
+break;
+case 'silver':
+tagIds.push('1000879');
+break;
+case 'transparent':
+tagIds.push('1016062');
+break;
+case 'multicolor':
+tagIds.push('1000887');
+break;
+default:
+tagIds.push('1000873');
+}
+}
+// メーカーに応じたtagIdを設定
+if (manufacturer !== '' && manufacturer !== '選択なし') {
+switch (manufacturer) {
+case 'logicool':
+tagIds.push('1002877');
+break;
+case 'elecom':
+tagIds.push('1002854');
+break;
+case 'logitech':
+tagIds.push('1002878');
+break;
+case 'asus':
+tagIds.push('1002853');
+break;
+case 'sanwa-supply':
+tagIds.push('1002859');
+break;
+case 'corsair':
+tagIds.push('1044767');
+break;
+case 'omron':
+tagIds.push('1004297');
+break;
+case 'razer':
+tagIds.push('1026502');
+break;
+case 'cooler-master':
+tagIds.push('1005456');
+break;
+case 'msi':
+tagIds.push('1004767');
+break;
+case 'lenovo':
+tagIds.push('1002875');
+break;
+case 'benq':
+tagIds.push('1004709');
+break;
+case 'century':
+tagIds.push('1018642');
+break;
+case 'microsoft':
+tagIds.push('1002872');
+break;
+case 'nzxt':
+tagIds.push('1044769');
+break;
+case 'hp':
+tagIds.push('1004771');
+break;
+case 'size':
+tagIds.push('1005458');
+break;
+case 'buffalo':
+tagIds.push('1002866');
+break;
+case 'intel':
+tagIds.push('1004775');
+break;
+default:
+tagIds.push('1000886');
+break;
+}
+}
+if (connectionType !== '' && connectionType !== '選択なし') {
+switch (connectionType) {
+case 'wireless-2.4ghz':
+tagIds.push('1043162');
+break;
+case 'wireless-bluetooth':
+tagIds.push('1005370');
+break;
+case 'wired-ps2':
+tagIds.push('1013520');
+break;
+case 'wired-usb-typea':
+tagIds.push('1005369');
+break;
+case 'wired-usb-typec':
+tagIds.push('1043161');
+break;
+default:
+tagIds.push('1043162');
+break;
+}
+}
+$.ajax({
+url: reqUrl,
+type: 'GET',
+data: {
+'applicationId': appId,
+'formatVersion': 2,
+'hits': 5,
+'keyword': 'ゲーミングマウス',
+'condition': '0',
+'tagId': tagIds.length > 0 ? tagIds.join(',') : undefined, // カンマ区切りのtagIdを送信 (存在しない場合は未定義)
+'minPrice': minPrice,
+'maxPrice': maxPrice,
+}
+})
+.done((data) => {
+let items = data.Items;
+items.sort((a, b) => b.reviewCount - a.reviewCount);
+let itemListHtml = '';
+
+
+console.log(data);
+
+
+for (let i in items) {
+let item = items[i];
+itemListHtml += `<li class="item">
+<figure class="item-image">
+<img src="${item['mediumImageUrls'][0]}" />
+</figure>
+<div class="item-name">${item['itemName']}</div>
+<div class="item-price">￥${item['itemPrice']}</div>
+<div class="item-review-count">レビュー数: ${item['reviewCount']}</div>
+<div class="item-rating-average">評価平均: ${item['reviewAverage']}</div>
+<a href="${item['itemUrl']}" target="_blank">商品ページへ</a>
+</li>`;
+}
+
+
+displayInformationWrapper.find('ul').empty().append(itemListHtml);
+})
+.fail((xhr, status, error) => {
+console.log('Error:', error);
+});
+});
+});
+</script>
 </body>
+
