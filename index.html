@@ -1,60 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rakuten API Example</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<style>
-body {
-font-family: Arial, sans-serif;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rakuten API Example</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+    }
 
-.container {
-max-width: 800px;
-margin: 0 auto;
-padding: 20px;
-text-align: center;
-}
+    .item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 5px;
+    }
 
+    .item-image img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+    }
 
-.item {
-display: flex;
-align-items: center;
-margin-bottom: 20px;
-border: 1px solid #ddd;
-padding: 10px;
-border-radius: 5px;
-}
+    .display-information-wrapper {
+      margin-top: 20px;
+    }
 
+    select, button, input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
 
-.item-image img {
-max-width: 100px;
-max-height: 100px;
-margin-right: 10px;
-}
+    button {
+      cursor: pointer;
+    }
 
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
 
-.display-information-wrapper {
-margin-top: 20px;
-}
-
-
-select, button {
-padding: 5px 10px;
-font-size: 14px;
-}
-
-
-ul {
-list-style: none;
-padding: 0;
-}
-</style>
+    @media only screen and (min-width: 600px) {
+      /* Adjust styles for screens wider than 600px */
+      .container {
+        padding: 40px;
+      }
+    }
+  </style>
 </head>
 <body>
-<div>
+<div class="container">
 <label for="color-select">色：</label>
 <select id="color-select">
 <option value="">選択なし</option>
@@ -335,4 +348,3 @@ console.log('Error:', error);
 });
 </script>
 </body>
-
